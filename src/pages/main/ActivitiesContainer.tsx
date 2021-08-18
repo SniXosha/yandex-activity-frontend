@@ -4,19 +4,18 @@ import {Container, makeStyles} from "@material-ui/core";
 export default function ActivitiesContainer(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.content} maxWidth={false}>
-        <Activity styleClass={classes.circle} size={3} title="Картинг"/>
-        <Activity styleClass={classes.circle} size={2} title="Серфинг"/>
-        <Activity styleClass={classes.circle} size={1} title="Велосипед"/>
+        <Activity styleClass={classes.circle} title="Картинг"/>
+        <Activity styleClass={classes.circle} title="Серфинг"/>
+        <Activity styleClass={classes.circle} title="Велосипед"/>
     </Container>
 }
 
 interface ActivityProps {
     styleClass: string,
     title: string,
-    size: number
 }
 
-function Activity({title, styleClass, size}: ActivityProps): ReactElement {
+function Activity({title, styleClass}: ActivityProps): ReactElement {
     return <div className={styleClass}>{title}</div>
 }
 
