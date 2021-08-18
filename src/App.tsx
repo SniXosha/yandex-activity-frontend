@@ -1,9 +1,10 @@
 import React, {ReactElement} from 'react';
 import './App.css';
-import {createMuiTheme, CssBaseline, makeStyles, ThemeProvider} from "@material-ui/core";
+import {createTheme, CssBaseline, makeStyles, ThemeProvider} from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainPage from "pages/main/MainPage";
 import ActivityPage from "pages/activity/ActivityPage";
+import ServiceAppBar from "appbar/ServiceAppBar";
 
 
 export default function App(): ReactElement {
@@ -13,6 +14,7 @@ export default function App(): ReactElement {
         <div className="App">
             <Router>
                 <div className={classes.content}>
+                    <ServiceAppBar/>
                     <Switch>
                         <Route exact path="/">
                             <MainPage/>
@@ -28,16 +30,21 @@ export default function App(): ReactElement {
 }
 
 function appTheme() {
-    return createMuiTheme({
+    return createTheme({
+        palette: {
+            primary: {
+                main: "#FFFFFF",
+            },
+        },
     });
 }
 const useStyles = makeStyles(() => ({
     appbar: {
         height: "4rem",
-        width: "100%"
     },
     content: {
         height: "calc(100% - 4rem)",
-        width: "100%"
+        width: "80%",
+        margin: "auto"
     },
 }));
