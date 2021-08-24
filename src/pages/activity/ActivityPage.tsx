@@ -1,11 +1,12 @@
 import React, {ReactElement} from "react";
 import {Container, makeStyles} from "@material-ui/core";
+import {ActivityHeader} from "./ActivityHeader";
 
 
 export default function ActivityPage(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.content} maxWidth={false}>
-        Activity Page
+        <ActivityHeader image={"surf"} imageSize={200} size={17} title={"Вейксерф"}/>
     </Container>
 }
 
