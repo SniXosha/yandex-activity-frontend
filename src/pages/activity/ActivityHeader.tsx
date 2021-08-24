@@ -5,7 +5,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 interface HeaderStyles {
     title: string;
     image: string;
-    imageSize: number;
 
     [key: string]: any;
 }
@@ -20,7 +19,7 @@ const styles = createStyles({
         fontSize: "1rem",
         color: "#FFF",
         backgroundImage: (props: HeaderStyles) => `url(/images/${props['image']}.png)`,
-        backgroundSize: (props: HeaderStyles) => `${props['imageSize']}%`,
+        backgroundSize: `100% 100%`,
         backgroundPosition: 'center',
         display: "flex",
         flexDirection: "column",
