@@ -17,7 +17,7 @@ function splitActivities(activities: any[]) {
 
 const activityDescriptionToElement = (size: number, activity: any): ReactElement => {
     return <Activity size={size} image={activity.image.url} imageSize={activity.image.size}
-                     title={activity.name}/>
+                     title={activity.name} id={activity.id}/>
 }
 
 const activitiesColumnToElement = (styleClass: string, activities: any[], sizes: number[]): ReactElement => {
@@ -59,10 +59,11 @@ interface ActivityProps {
     title: string,
     image: string,
     imageSize: number,
+    id: string,
 }
 
-function Activity({title, size, image, imageSize}: ActivityProps): ReactElement {
-    return <ActivityCircle image={image} imageSize={imageSize} size={size} title={title}/>
+function Activity({title, size, image, imageSize, id}: ActivityProps): ReactElement {
+    return <ActivityCircle image={image} imageSize={imageSize} size={size} title={title} id={id}/>
 }
 
 const useStyles = makeStyles(theme => ({
@@ -83,6 +84,7 @@ interface Styles {
     size: number;
     image: string;
     imageSize: number;
+    id: string;
 
     [key: string]: any;
 }
@@ -92,6 +94,7 @@ interface ButtonStyles extends WithStyles<typeof styles> {
     size: number;
     image: string;
     imageSize: number;
+    id: string;
 }
 
 const styles = createStyles({
@@ -122,12 +125,12 @@ const styles = createStyles({
         marginRight: "3vw",
         backgroundColor: "white",
         color: "black",
-        borderRadius: "15%",
+        borderRadius: "5vw",
     }
 });
 
-const ActivityCircle = withStyles(styles)(({classes, title, size, ...other}: ButtonStyles) => (
-    <div className={classes.root}>
+const ActivityCircle = withStyles(styles)(({classes, title, id, size, ...other}: ButtonStyles) => (
+    <div className={classes.root} onClick={() => window.location.href = `/activity/${id}`}>
         <Typography className={classes.title}>{title}</Typography>
     </div>
 ));

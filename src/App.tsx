@@ -19,7 +19,7 @@ export default function App(): ReactElement {
                         <Route exact path="/">
                             <MainPage/>
                         </Route>
-                        <Route exact path="/activity">
+                        <Route exact path="/activity/:name">
                             <ActivityPage/>
                         </Route>
                     </Switch>

@@ -13,7 +13,7 @@ export default function ServiceAppBar(): ReactElement {
         <Toolbar className="bar">
             <IconButton edge="start" className={classes.search} color="inherit" aria-label="menu">
                 <FlashOnIcon />
-                <Typography variant="h6" className={classes.title}>
+                <Typography variant="h6" className={classes.title} onClick={() => window.location.href = '/'}>
                     Яндекс Выходные
                 </Typography>
             </IconButton>

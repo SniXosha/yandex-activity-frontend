@@ -3,17 +3,26 @@ import {Button, ButtonGroup, Container, makeStyles, Slider, Typography, withStyl
 import ActivitiesContainer from "pages/main/ActivitiesContainer";
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import {allActivities} from "data/activities";
+import {useDispatch, useSelector} from "react-redux";
+import {setActivityLevel, setMoney} from "redux/filters";
 
 export default function MainPage(): ReactElement {
     const classes = useStyles();
-    let activities = allActivities.sort(() => .5 - Math.random())
+    let sortedActivities = allActivities
+    const activityLevel = useSelector((state: any) => state.filter.activityLevel)
+    const money = useSelector((state: any) => state.filter.money)
+    let finalActivities = sortedActivities.filter(activity => {
+        if (money !== 0 && activity.money > money) return false
+        return activity.activityLevel > activityLevel;
+    })
+
     return <Container className={classes.content} maxWidth={false}>
         <Typography className={classes.slogan} variant="h2">Выбирай, как провести время</Typography>
         <div className={classes.topBar}>
             <ChooseBar/>
             <CategoriesBar/>
         </div>
-        <ActivitiesContainer activities={activities}/>
+        <ActivitiesContainer activities={finalActivities}/>
     </Container>
 }
 
@@ -67,8 +76,8 @@ function WeatherInfo({day, temp, classes}: any) {
 function TypeFilters(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.filters}>
-        <NamedSlider name="Уровень активности"/>
-        <NamedSlider name="Бюджет"/>
+        <ActivitySlider name="Уровень активности"/>
+        <MoneySlider name="Бюджет"/>
         <Button>Больше фильтров</Button>
         <Button>Подберите мне развлечение</Button>
     </Container>
@@ -83,11 +92,25 @@ function SpaceTimeFilters(): ReactElement {
     </Container>
 }
 
-function NamedSlider({name}: any): ReactElement {
+function ActivitySlider({name}: any): ReactElement {
     const classes = useStyles();
+    const activityLevel = useSelector((state: any) => state.filter.activityLevel)
+    const dispatch = useDispatch()
     return <div className={classes.slider}>
         {name}
-        <IOSSlider aria-labelledby="continuous-slider"/>
+        <IOSSlider value={activityLevel} onChange={(e, newValue) => dispatch(setActivityLevel(newValue))} defaultValue={0} min={0} max={10} step={1} aria-labelledby="continuous-slider"/>
+        {activityLevel}
+    </div>
+}
+
+function MoneySlider({name}: any): ReactElement {
+    const classes = useStyles();
+    const money = useSelector((state: any) => state.filter.money)
+    const dispatch = useDispatch()
+    return <div className={classes.slider}>
+        {name}
+        <IOSSlider value={money} onChange={(e, newValue) => dispatch(setMoney(newValue))} defaultValue={0} min={0} max={10000} step={500} aria-labelledby="continuous-slider"/>
+        {money}
     </div>
 }
 

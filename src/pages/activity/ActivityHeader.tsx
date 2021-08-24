@@ -3,7 +3,6 @@ import React from "react";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 interface HeaderStyles {
-    size: number;
     image: string;
     imageSize: number;
 
@@ -12,7 +11,6 @@ interface HeaderStyles {
 
 interface ButtonStyles extends WithStyles<typeof styles> {
     title: string;
-    size: number;
     image: string;
     imageSize: number;
 }
@@ -70,7 +68,7 @@ const styles = createStyles({
     }
 });
 
-export const ActivityHeader = withStyles(styles)(({classes, title, size, ...other}: ButtonStyles) => (
+export const ActivityHeader = withStyles(styles)(({classes, title, ...other}: ButtonStyles) => (
     <div className={classes.root}>
         <div className={classes.lowerBar}>
             <Typography className={classes.title}>{title}</Typography>
