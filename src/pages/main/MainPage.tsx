@@ -15,7 +15,8 @@ export default function MainPage(): ReactElement {
     let finalActivities = sortedActivities.filter(activity => {
         if (money !== 0 && activity.money > money) return false
         if (category !== ALL && activity.category !== category) return false
-        return activity.activityLevel > activityLevel;
+        if (activityLevel !== 0 && activity.activityLevel !== activityLevel) return false
+        return true;
     })
 
     return <Container className={classes.content} maxWidth={false}>
@@ -82,6 +83,15 @@ function SpaceTimeFilters(): ReactElement {
     </Container>
 }
 
+const namedActivityLevel = (activityLevel: number) => {
+    return {
+        0: 'любой',
+        1: 'низкий',
+        2: 'средний',
+        3: 'высокий',
+    }[activityLevel]
+}
+
 function ActivitySlider({name}: any): ReactElement {
     const classes = useStyles();
     const activityLevel = useSelector((state: any) => state.filter.activityLevel)
@@ -89,8 +99,8 @@ function ActivitySlider({name}: any): ReactElement {
     return <div className={classes.slider}>
         {name}
         <IOSSlider value={activityLevel} onChange={(e, newValue) => dispatch(setActivityLevel(newValue))}
-                   defaultValue={0} min={0} max={10} step={1} aria-labelledby="continuous-slider"/>
-        {activityLevel}
+                   defaultValue={0} min={0} max={3} step={1} aria-labelledby="continuous-slider"/>
+        {namedActivityLevel(activityLevel)}
     </div>
 }
 
@@ -100,8 +110,8 @@ function MoneySlider({name}: any): ReactElement {
     const dispatch = useDispatch()
     return <div className={classes.slider}>
         {name}
-        <IOSSlider value={money} onChange={(e, newValue) => dispatch(setMoney(newValue))} defaultValue={0} min={0}
-                   max={10000} step={500} aria-labelledby="continuous-slider"/>
+        <IOSSlider value={money} onChange={(e, newValue) => dispatch(setMoney(newValue))} min={0}
+                   max={10000} step={100} aria-labelledby="continuous-slider"/>
         {money}
     </div>
 }

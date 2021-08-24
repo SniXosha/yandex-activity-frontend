@@ -5,8 +5,8 @@ export const filterSlice = createSlice({
     name: 'filters',
     initialState: {
         activityLevel: 0,
-        money: 0,
-        category: ALL
+        money: 10000,
+        category: ALL,
     },
     reducers: {
         setActivityLevel: (state, action) => {
