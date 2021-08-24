@@ -1,18 +1,20 @@
 import React, {ReactElement} from "react";
 import {Button, ButtonGroup, Container, makeStyles, Slider, Typography, withStyles} from "@material-ui/core";
 import ActivitiesContainer from "pages/main/ActivitiesContainer";
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import {allActivities} from "data/activities";
+import {ALL, allActivities, FUN, REST, SPORT, WALKS} from "data/activities";
 import {useDispatch, useSelector} from "react-redux";
-import {setActivityLevel, setMoney} from "redux/filters";
+import {setActivityLevel, setCategory, setMoney} from "redux/filters";
+import {Dispatch} from "redux";
 
 export default function MainPage(): ReactElement {
     const classes = useStyles();
     let sortedActivities = allActivities
     const activityLevel = useSelector((state: any) => state.filter.activityLevel)
     const money = useSelector((state: any) => state.filter.money)
+    const category = useSelector((state: any) => state.filter.category)
     let finalActivities = sortedActivities.filter(activity => {
         if (money !== 0 && activity.money > money) return false
+        if (category !== ALL && activity.category !== category) return false
         return activity.activityLevel > activityLevel;
     })
 
@@ -34,44 +36,32 @@ function ChooseBar(): ReactElement {
     </Container>
 }
 
+const categories = [
+    {value: ALL, label: 'все'},
+    {value: SPORT, label: 'спорт'},
+    {value: WALKS, label: 'прогулки'},
+    {value: FUN, label: 'развлечения'},
+    {value: REST, label: 'отдых'},
+]
+
+const categoryToButton = (dispatch: Dispatch, category: any, styleClass: string) => {
+    return <Button className={styleClass} onClick={() => dispatch(setCategory(category.value))}>{category.label}</Button>
+}
+
 function CategoriesBar(): ReactElement {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const currentCategory = useSelector((state: any) => state.filter.category)
+
+    const buttons = categories.map(category => categoryToButton(dispatch, category, category.value === currentCategory ? classes.selectedCategory : classes.unselectedCategory))
+
     return <Container className={classes.categories}>
         <ButtonGroup variant="text" aria-label="text button group">
-            <Button>все</Button>
-            <Button>спорт</Button>
-            <Button>прогулки</Button>
-            <Button>мастер-классы</Button>
-            <Button>экстрим-развлечения</Button>
-            <Button>танцы</Button>
-            <Button>ремесло</Button>
-            <Button>больше категорий</Button>
+            {buttons}
         </ButtonGroup>
     </Container>
 }
 
-function WeekendInfoBar() {
-    const classes = useStyles();
-    const weatherClasses = useWeatherStyles();
-    return <Container className={classes.weekendInfo}>
-        <Typography variant="h5">До выходных:</Typography>
-        <Typography variant="h5">2 дня</Typography>
-        <Container className={classes.days}>
-            <WeatherInfo day="сб" temp="+24°" classes={weatherClasses}/>
-            <WeatherInfo day="вс" temp="+17°" classes={weatherClasses}/>
-        </Container>
-    </Container>
-}
-
-function WeatherInfo({day, temp, classes}: any) {
-    return <Container className={classes.weather}>
-        <WbSunnyIcon className={classes.icon} fontSize="large"/>
-        <Container className={classes.weatherText}>
-            <Typography>{day}</Typography>
-            <Typography>{temp}</Typography>
-        </Container>
-    </Container>
-}
 
 function TypeFilters(): ReactElement {
     const classes = useStyles();
@@ -98,7 +88,8 @@ function ActivitySlider({name}: any): ReactElement {
     const dispatch = useDispatch()
     return <div className={classes.slider}>
         {name}
-        <IOSSlider value={activityLevel} onChange={(e, newValue) => dispatch(setActivityLevel(newValue))} defaultValue={0} min={0} max={10} step={1} aria-labelledby="continuous-slider"/>
+        <IOSSlider value={activityLevel} onChange={(e, newValue) => dispatch(setActivityLevel(newValue))}
+                   defaultValue={0} min={0} max={10} step={1} aria-labelledby="continuous-slider"/>
         {activityLevel}
     </div>
 }
@@ -109,7 +100,8 @@ function MoneySlider({name}: any): ReactElement {
     const dispatch = useDispatch()
     return <div className={classes.slider}>
         {name}
-        <IOSSlider value={money} onChange={(e, newValue) => dispatch(setMoney(newValue))} defaultValue={0} min={0} max={10000} step={500} aria-labelledby="continuous-slider"/>
+        <IOSSlider value={money} onChange={(e, newValue) => dispatch(setMoney(newValue))} defaultValue={0} min={0}
+                   max={10000} step={500} aria-labelledby="continuous-slider"/>
         {money}
     </div>
 }
@@ -176,22 +168,11 @@ const useStyles = makeStyles(theme => ({
     },
     categories: {
         marginTop: '1vw'
-    }
-}));
-
-const useWeatherStyles = makeStyles(theme => ({
-    icon: {
-        width: '100%'
     },
-    weather: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '40%'
+    selectedCategory: {
+        backgroundColor: 'lightgray',
     },
-    textWeather: {
-        display: 'flex',
-        flexDirection: 'column'
-    }
+    unselectedCategory: {}
 }));
 
 const iOSBoxShadow =

@@ -1,3 +1,9 @@
+export const SPORT = 'sport'
+export const WALKS = 'walks'
+export const REST = 'rest'
+export const FUN = 'fun'
+export const ALL = 'all'
+
 export const wakesurf = {
     id: 'wakesurf',
     name: 'Вейксёрф',
@@ -6,7 +12,8 @@ export const wakesurf = {
         size: 250
     },
     activityLevel: 9,
-    money: 3000
+    money: 3000,
+    category: SPORT
 }
 
 export const horses = {
@@ -17,7 +24,8 @@ export const horses = {
         size: 150
     },
     activityLevel: 3,
-    money: 1500
+    money: 1500,
+    category: WALKS
 }
 
 export const boardGames = {
@@ -28,7 +36,8 @@ export const boardGames = {
         size: 200
     },
     activityLevel: 1,
-    money: 700
+    money: 700,
+    category: FUN
 }
 
 export const masterClasses = {
@@ -39,7 +48,8 @@ export const masterClasses = {
         size: 200
     },
     activityLevel: 1,
-    money: 2000
+    money: 2000,
+    category: REST
 }
 
 export const planetarium = {
@@ -50,7 +60,8 @@ export const planetarium = {
         size: 200
     },
     activityLevel: 1,
-    money: 500
+    money: 500,
+    category: REST
 }
 
 export const tea = {
@@ -61,7 +72,8 @@ export const tea = {
         size: 150
     },
     activityLevel: 1,
-    money: 500
+    money: 500,
+    category: REST
 }
 
 export const rockClimbing = {
@@ -72,7 +84,8 @@ export const rockClimbing = {
         size: 150
     },
     activityLevel: 5,
-    money: 700
+    money: 700,
+    category: SPORT
 }
 
 export const laserTag = {
@@ -83,7 +96,8 @@ export const laserTag = {
         size: 200
     },
     activityLevel: 3,
-    money: 1000
+    money: 1000,
+    category: FUN
 }
 
 export const karting = {
@@ -94,7 +108,8 @@ export const karting = {
         size: 170
     },
     activityLevel: 6,
-    money: 2000
+    money: 2000,
+    category: FUN
 }
 
 export const sauna = {
@@ -105,7 +120,8 @@ export const sauna = {
         size: 150
     },
     activityLevel: 2,
-    money: 2000
+    money: 2000,
+    category: REST
 }
 
 export const stretching = {
@@ -116,7 +132,8 @@ export const stretching = {
         size: 150
     },
     activityLevel: 4,
-    money: 1000
+    money: 1000,
+    category: SPORT
 }
 
 export const allActivities = [
