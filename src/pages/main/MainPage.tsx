@@ -6,13 +6,14 @@ import {allActivities} from "data/activities";
 
 export default function MainPage(): ReactElement {
     const classes = useStyles();
+    let activities = allActivities.sort(() => .5 - Math.random())
     return <Container className={classes.content} maxWidth={false}>
         <Typography className={classes.slogan} variant="h2">Выбирай, как провести время</Typography>
         <div className={classes.topBar}>
             <ChooseBar/>
             <CategoriesBar/>
         </div>
-        <ActivitiesContainer activities={allActivities}/>
+        <ActivitiesContainer activities={activities}/>
     </Container>
 }
 
