@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {ALL} from "data/activities";
 
 export const filterSlice = createSlice({
     name: 'filters',
     initialState: {
         activityLevel: 0,
         money: 0,
+        category: ALL
     },
     reducers: {
         setActivityLevel: (state, action) => {
@@ -13,9 +15,12 @@ export const filterSlice = createSlice({
         setMoney: (state, action) => {
             state.money = action.payload
         },
+        setCategory: (state, action) => {
+            state.category = action.payload
+        },
     },
 })
 
-export const { setActivityLevel, setMoney } = filterSlice.actions
+export const { setActivityLevel, setMoney, setCategory } = filterSlice.actions
 
 export default filterSlice.reducer
