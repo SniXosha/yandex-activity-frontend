@@ -15,7 +15,7 @@ export default function ActivityPage(): ReactElement {
     </Container>
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     content: {
         height: "100%",
         width: "100%",

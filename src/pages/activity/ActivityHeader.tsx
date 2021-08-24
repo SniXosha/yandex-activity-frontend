@@ -1,19 +1,15 @@
-import {Button, createStyles, Typography, withStyles, WithStyles} from "@material-ui/core";
+import {Button, createStyles, Typography, withStyles} from "@material-ui/core";
 import React from "react";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 interface HeaderStyles {
+    title: string;
     image: string;
     imageSize: number;
 
     [key: string]: any;
 }
 
-interface ButtonStyles extends WithStyles<typeof styles> {
-    title: string;
-    image: string;
-    imageSize: number;
-}
 
 const styles = createStyles({
     root: {
@@ -68,7 +64,7 @@ const styles = createStyles({
     }
 });
 
-export const ActivityHeader = withStyles(styles)(({classes, title, ...other}: ButtonStyles) => (
+export const ActivityHeader = withStyles(styles)(({classes, title}: HeaderStyles) => (
     <div className={classes.root}>
         <div className={classes.lowerBar}>
             <Typography className={classes.title}>{title}</Typography>
