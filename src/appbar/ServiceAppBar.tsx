@@ -1,5 +1,5 @@
 import {ReactElement} from "react";
-import {AppBar, IconButton, InputAdornment, makeStyles, Paper, TextField, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, IconButton, InputAdornment, makeStyles, TextField, Toolbar, Typography} from "@material-ui/core";
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 export default function ServiceAppBar(): ReactElement {
     const classes = useStyles();
 
-    return <AppBar position="static" elevation={0} color="transparent">
+    return <AppBar position="static" elevation={0} color="secondary">
         <Toolbar className="bar">
             <IconButton edge="start" className={classes.search} color="inherit" aria-label="menu">
                 <FlashOnIcon />
@@ -41,7 +41,6 @@ export default function ServiceAppBar(): ReactElement {
                     Мои активности
                 </Typography>
             </IconButton>
-            <Paper className={classes.menuButton}>173</Paper>
             <AccountCircleIcon/>
         </Toolbar>
     </AppBar>

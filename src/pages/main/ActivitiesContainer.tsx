@@ -1,30 +1,45 @@
 import React, {ReactElement} from "react";
-import {Container, makeStyles, WithStyles} from "@material-ui/core";
-import { withStyles } from "@material-ui/core";
+import {Container, createStyles, makeStyles, Typography, WithStyles} from "@material-ui/core";
+import {withStyles} from "@material-ui/core";
 
-export default function ActivitiesContainer(): ReactElement {
+function splitActivities(activities: any[]) {
+    let n = Math.min(activities.length, 4);
+    let result = [];
+    for (let i = 0; i < n; i++) {
+        let column = []
+        for (let j = 0; j < activities.length; j++) {
+            if (j % n === i) column.push(activities[j])
+        }
+        result.push(column)
+    }
+    return result;
+}
+
+const activityDescriptionToElement = (size: number, activity: any): ReactElement => {
+    return <Activity size={size} image={activity.image.url} imageSize={activity.image.size}
+                     title={activity.name}/>
+}
+
+const activitiesColumnToElement = (styleClass: string, activities: any[], sizes: number[]): ReactElement => {
+    return <ActivityColumn styleClass={styleClass}>
+        {activities.map((activity, index) => activityDescriptionToElement(sizes[index % 3], activity))}
+    </ActivityColumn>
+}
+
+const splittedActivitiesToColumns = (styleClass: string, splittedActivities: any[]): ReactElement[] => {
+    let sizes = [[17, 15, 13], [13, 17, 15]]
+
+    return splittedActivities.map((activities, index) => activitiesColumnToElement(styleClass, activities, sizes[index % 2]))
+}
+
+export default function ActivitiesContainer({activities}: any): ReactElement {
     const classes = useStyles();
+    const splittedActivities = splitActivities(activities);
+
+    const activityColumns = splittedActivitiesToColumns(classes.activityColumn, splittedActivities)
+
     return <Container className={classes.content} maxWidth={false}>
-        <ActivityColumn styleClass={classes.activityColumn}>
-            <Activity size={17} image="surf" imageSize={250} title="Мужик в контрсвете"/>
-            <Activity size={15} image="cook" imageSize={200} title="Смешные томаты"/>
-            <Activity size={13} image="lasers" imageSize={200} title="Школьники"/>
-        </ActivityColumn>
-        <ActivityColumn styleClass={classes.activityColumn}>
-            <Activity size={13} image="horse" imageSize={150} title="Конь ебать"/>
-            <Activity size={17} image="planets" imageSize={200} title="Бэд трип"/>
-            <Activity size={15} image="karting" imageSize={170} title="Врум врум"/>
-        </ActivityColumn>
-        <ActivityColumn styleClass={classes.activityColumn}>
-            <Activity size={17} image="quest" imageSize={150} title="Держим дверь"/>
-            <Activity size={15} image="tea" imageSize={150} title="Чифирнуть"/>
-            <Activity size={13} image="sauna" imageSize={150} title="Три телки"/>
-        </ActivityColumn>
-        <ActivityColumn styleClass={classes.activityColumn}>
-            <Activity size={13} image="games" imageSize={200} title="Смотрим на стол"/>
-            <Activity size={17} image="rock" imageSize={150} title="Смеемся над камнем"/>
-            <Activity size={15} image="stretching" imageSize={150} title="Шпагат"/>
-        </ActivityColumn>
+        {activityColumns}
     </Container>
 }
 
@@ -47,7 +62,7 @@ interface ActivityProps {
 }
 
 function Activity({title, size, image, imageSize}: ActivityProps): ReactElement {
-    return <StyledButton image={image} imageSize={imageSize} size={size} title={title}/>
+    return <ActivityCircle image={image} imageSize={imageSize} size={size} title={title}/>
 }
 
 const useStyles = makeStyles(theme => ({
@@ -68,6 +83,7 @@ interface Styles {
     size: number;
     image: string;
     imageSize: number;
+
     [key: string]: any;
 }
 
@@ -78,24 +94,40 @@ interface ButtonStyles extends WithStyles<typeof styles> {
     imageSize: number;
 }
 
-const styles = {
+const styles = createStyles({
     root: {
         margin: "1vw auto",
         width: (props: Styles) => props['size'] + "vw",
         height: (props: Styles) => props['size'] + "vw",
-        lineHeight: (props: Styles) => props['size'] + "vw",
+        verticalAlign: "bottom",
         borderRadius: "50%",
         fontSize: "1rem",
         color: "#FFF",
-        border: "solid 1px",
         backgroundImage: (props: Styles) => `url(/images/${props['image']}.png)`,
         backgroundSize: (props: Styles) => `${props['imageSize']}%`,
         backgroundPosition: 'center',
-        borderColor: "#000",
-        textShadow: "1px 1px #000000"
-},
-};
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "end",
+        '&:hover': {
+            border: 'solid 5px',
+            borderColor: "#fcee7c",
+            transition: 'transform .2s',
+        },
+    },
+    title: {
+        marginTop: "auto",
+        marginBottom: "3vw",
+        marginLeft: "3vw",
+        marginRight: "3vw",
+        backgroundColor: "white",
+        color: "black",
+        borderRadius: "15%",
+    }
+});
 
-const StyledButton = withStyles(styles)(({ classes, title, size, ...other }: ButtonStyles) => (
-    <div className={classes.root}>{title}</div>
+const ActivityCircle = withStyles(styles)(({classes, title, size, ...other}: ButtonStyles) => (
+    <div className={classes.root}>
+        <Typography className={classes.title}>{title}</Typography>
+    </div>
 ));

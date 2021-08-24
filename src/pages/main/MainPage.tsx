@@ -1,51 +1,84 @@
 import React, {ReactElement} from "react";
-import {Button, Container, makeStyles, Slider, Typography, withStyles} from "@material-ui/core";
+import {Button, ButtonGroup, Container, makeStyles, Slider, Typography, withStyles} from "@material-ui/core";
 import ActivitiesContainer from "pages/main/ActivitiesContainer";
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
+import {allActivities} from "data/activities";
 
 export default function MainPage(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.content} maxWidth={false}>
-        <Container className={classes.topBar}>
+        <Typography className={classes.slogan} variant="h2">Выбирай, как провести время</Typography>
+        <div className={classes.topBar}>
             <ChooseBar/>
-            <WeekendInfoBar/>
-        </Container>
-        <ActivitiesContainer/>
+            <CategoriesBar/>
+        </div>
+        <ActivitiesContainer activities={allActivities}/>
     </Container>
 }
 
 function ChooseBar(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.choose}>
-        <Typography variant="h2">Выбирай, как провести время</Typography>
-        <Filters/>
+        <TypeFilters/>
+        <SpaceTimeFilters/>
+    </Container>
+}
+
+function CategoriesBar(): ReactElement {
+    const classes = useStyles();
+    return <Container className={classes.categories}>
+        <ButtonGroup variant="text" aria-label="text button group">
+            <Button>все</Button>
+            <Button>спорт</Button>
+            <Button>прогулки</Button>
+            <Button>мастер-классы</Button>
+            <Button>экстрим-развлечения</Button>
+            <Button>танцы</Button>
+            <Button>ремесло</Button>
+            <Button>больше категорий</Button>
+        </ButtonGroup>
     </Container>
 }
 
 function WeekendInfoBar() {
     const classes = useStyles();
+    const weatherClasses = useWeatherStyles();
     return <Container className={classes.weekendInfo}>
-        <Typography variant="h6">До выходных: 2 дня</Typography>
+        <Typography variant="h5">До выходных:</Typography>
+        <Typography variant="h5">2 дня</Typography>
         <Container className={classes.days}>
-            <WeatherInfo day="сб"/>
-            <WeatherInfo day="вс"/>
+            <WeatherInfo day="сб" temp="+24°" classes={weatherClasses}/>
+            <WeatherInfo day="вс" temp="+17°" classes={weatherClasses}/>
         </Container>
     </Container>
 }
 
-function WeatherInfo({day}: any) {
-    return <div>
-        <WbSunnyIcon/>
-        <Typography>{day}</Typography>
-    </div>
+function WeatherInfo({day, temp, classes}: any) {
+    return <Container className={classes.weather}>
+        <WbSunnyIcon className={classes.icon} fontSize="large"/>
+        <Container className={classes.weatherText}>
+            <Typography>{day}</Typography>
+            <Typography>{temp}</Typography>
+        </Container>
+    </Container>
 }
 
-function Filters(): ReactElement {
+function TypeFilters(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.filters}>
         <NamedSlider name="Уровень активности"/>
         <NamedSlider name="Бюджет"/>
         <Button>Больше фильтров</Button>
+        <Button>Подберите мне развлечение</Button>
+    </Container>
+}
+
+function SpaceTimeFilters(): ReactElement {
+    const classes = useStyles();
+    return <Container className={classes.spaceTime}>
+        <Button>м. Севастопольская</Button>
+        <Button>28 августа</Button>
+        <Button>15:00 - 19:00</Button>
     </Container>
 }
 
@@ -64,36 +97,76 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        backgroundColor: '#fffef2'
+    },
+    spaceTime: {
+        border: 'solid 1px',
+        borderColor: 'gray',
+        borderRadius: '1vw',
+        width: "60%",
+        marginTop: "1vw",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    slogan: {
+        marginLeft: '1vw',
+        textAlign: 'left',
     },
     days: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        width: "100%"
     },
     weekendInfo: {
         width: "20%"
     },
     topBar: {
-        height: "100%",
         width: "100%",
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'column',
+        margin: '1vw',
     },
     choose: {
         textAlign: "left",
-        width: "80%"
+        width: "80%",
+        border: 'solid 2px',
+        borderRadius: "2vw",
+        padding: "1vw",
+        display: 'flex',
+        flexDirection: 'column'
     },
     filters: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'left',
+        justifyContent: 'space-between',
         paddingLeft: "0.5vw"
     },
     slider: {
         display: 'flex',
         flexDirection: 'column',
         width: "10vw",
+    },
+    categories: {
+        marginTop: '1vw'
+    }
+}));
+
+const useWeatherStyles = makeStyles(theme => ({
+    icon: {
+        width: '100%'
+    },
+    weather: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '40%'
+    },
+    textWeather: {
+        display: 'flex',
+        flexDirection: 'column'
     }
 }));
 
@@ -102,7 +175,7 @@ const iOSBoxShadow =
 
 const IOSSlider = withStyles({
     root: {
-        color: '#3880ff',
+        color: '#fcee7c',
         height: 2,
         padding: '15px 0',
         margin: "0.25vw",

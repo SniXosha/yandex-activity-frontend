@@ -35,6 +35,9 @@ function appTheme() {
             primary: {
                 main: "#FFFFFF",
             },
+            secondary: {
+                main: "#fcee7c",
+            },
         },
     });
 }
