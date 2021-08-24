@@ -4,7 +4,6 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SearchIcon from '@material-ui/icons/Search';
 
 export default function ServiceAppBar(): ReactElement {
     const classes = useStyles();
@@ -17,18 +16,6 @@ export default function ServiceAppBar(): ReactElement {
                     Яндекс Выходные
                 </Typography>
             </IconButton>
-            <TextField
-                variant="outlined"
-                className={classes.menuButton}
-                id="input-with-icon-textfield"
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <SearchIcon />
-                        </InputAdornment>
-                    ),
-                }}
-            />
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <LocationOnIcon />
                 <Typography variant="h6" className={classes.title}>

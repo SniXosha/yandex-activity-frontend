@@ -1,10 +1,21 @@
-import React, {ReactElement} from "react";
-import {Button, ButtonGroup, Container, makeStyles, Slider, Typography, withStyles} from "@material-ui/core";
-import ActivitiesContainer from "pages/main/ActivitiesContainer";
-import {ALL, allActivities, FUN, REST, SPORT, WALKS} from "data/activities";
+import React, {ReactElement, useState} from "react";
+import {
+    Button,
+    ButtonGroup, Checkbox,
+    Container, FormControlLabel,
+    IconButton, InputAdornment,
+    makeStyles,
+    Slider, TextField, Toolbar,
+    Typography,
+    withStyles
+} from "@material-ui/core";
+import ActivitiesContainer, {ActivityCircle} from "pages/main/ActivitiesContainer";
+import {ALL, allActivities, FUN, randomActivity, REST, SPORT, WALKS} from "data/activities";
 import {useDispatch, useSelector} from "react-redux";
-import {setActivityLevel, setCategory, setMoney} from "redux/filters";
+import {setActivityLevel, setBinary, setCategory, setMoney} from "redux/filters";
 import {Dispatch} from "redux";
+import {Modal} from "@material-ui/core";
+import {Popover} from "@material-ui/core";
 
 export default function MainPage(): ReactElement {
     const classes = useStyles();
@@ -12,10 +23,14 @@ export default function MainPage(): ReactElement {
     const activityLevel = useSelector((state: any) => state.filter.activityLevel)
     const money = useSelector((state: any) => state.filter.money)
     const category = useSelector((state: any) => state.filter.category)
+    const binary = useSelector((state: any) => state.filter.binary)
     let finalActivities = sortedActivities.filter(activity => {
         if (money !== 0 && activity.money > money) return false
         if (category !== ALL && activity.category !== category) return false
         if (activityLevel !== 0 && activity.activityLevel !== activityLevel) return false
+        let badFilters = Object.entries(binary).filter(value => value[1]).map(value => value[0]).filter(value => !activity.binary.includes(value))
+        if (badFilters.length > 0) return false
+
         return true;
     })
 
@@ -33,7 +48,7 @@ function ChooseBar(): ReactElement {
     const classes = useStyles();
     return <Container className={classes.choose}>
         <TypeFilters/>
-        <SpaceTimeFilters/>
+        {/*<SpaceTimeFilters/>*/}
     </Container>
 }
 
@@ -46,7 +61,8 @@ const categories = [
 ]
 
 const categoryToButton = (dispatch: Dispatch, category: any, styleClass: string) => {
-    return <Button className={styleClass} onClick={() => dispatch(setCategory(category.value))}>{category.label}</Button>
+    return <Button className={styleClass}
+                   onClick={() => dispatch(setCategory(category.value))}>{category.label}</Button>
 }
 
 function CategoriesBar(): ReactElement {
@@ -69,10 +85,87 @@ function TypeFilters(): ReactElement {
     return <Container className={classes.filters}>
         <ActivitySlider name="Уровень активности"/>
         <MoneySlider name="Бюджет"/>
-        <Button>Больше фильтров</Button>
-        <Button>Подберите мне развлечение</Button>
+        <FiltersButton/>
+        <RandomButton/>
     </Container>
 }
+
+function FiltersButton(): ReactElement {
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+    const [open, setOpen] = useState(false)
+
+    return <>
+        <Button onClick={(e) => {
+            setOpen(true);
+            setAnchorEl(e.currentTarget)
+        }}>Больше фильтров</Button>
+        <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={() => {
+                setOpen(false);
+                setAnchorEl(null)
+            }}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+        >
+            <Container className={classes.binaryFilters}>
+                <AdditionalCheckbox label='Можно одному' binaryFilter='solo'/>
+                <AdditionalCheckbox label='Можно с компанией' binaryFilter='company'/>
+                <AdditionalCheckbox label='Не нужно ничего брать' binaryFilter='noEquipment'/>
+                <AdditionalCheckbox label='В помещении' binaryFilter='indoor'/>
+                <AdditionalCheckbox label='На улице' binaryFilter='outdoor'/>
+            </Container>
+        </Popover>
+    </>
+}
+
+function AdditionalCheckbox({label, binaryFilter}: any): ReactElement {
+    const dispatch = useDispatch()
+    const value = useSelector((state: any) => state.filter.binary[binaryFilter])
+    return <FormControlLabel
+        control={
+            <Checkbox
+                checked={value}
+                onChange={() => {
+                    dispatch(setBinary(binaryFilter))
+                }}
+                name="checkedF"
+            />
+        }
+        label={label}
+    />
+}
+
+function RandomButton(): ReactElement {
+    const classes = useStyles();
+    const [activity, setActivity] = useState(randomActivity())
+
+    const [open, setOpen] = useState(false)
+    return <>
+        <Button onClick={() => setOpen(true)}>Подберите мне развлечение</Button>
+        <Modal
+            open={open}
+            onClose={() => setOpen(false)}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+        >
+            <Container className={classes.randomModal}>
+                <ActivityCircle image={activity.image.url} imageSize={activity.image.size} size={19}
+                                title={activity.name} id={activity.id}/>
+                <Button onClick={() => setActivity(randomActivity())} className={classes.nextButton}>Ещё</Button>
+            </Container>
+        </Modal>
+    </>
+}
+
 
 function SpaceTimeFilters(): ReactElement {
     const classes = useStyles();
@@ -136,6 +229,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     },
     slogan: {
+        marginTop: '2vw',
         marginLeft: '1vw',
         textAlign: 'left',
     },
@@ -182,7 +276,23 @@ const useStyles = makeStyles(theme => ({
     selectedCategory: {
         backgroundColor: 'lightgray',
     },
-    unselectedCategory: {}
+    unselectedCategory: {},
+    randomModal: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    nextButton: {
+        backgroundColor: '#fcee7c',
+        width: '10vw',
+        '&:hover': {
+            backgroundColor: "#fcee6c",
+        },
+    },
+    binaryFilters: {
+        display: 'flex',
+        flexDirection: 'column',
+    }
 }));
 
 const iOSBoxShadow =

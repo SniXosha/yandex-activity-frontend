@@ -7,6 +7,13 @@ export const filterSlice = createSlice({
         activityLevel: 0,
         money: 10000,
         category: ALL,
+        binary: {
+            solo: false,
+            company: false,
+            noEquipment: false,
+            indoor: false,
+            outdoor: false,
+        }
     },
     reducers: {
         setActivityLevel: (state, action) => {
@@ -18,9 +25,13 @@ export const filterSlice = createSlice({
         setCategory: (state, action) => {
             state.category = action.payload
         },
+        setBinary: (state, action) => {
+            // @ts-ignore
+            state.binary[action.payload] = !state.binary[action.payload]
+        }
     },
 })
 
-export const { setActivityLevel, setMoney, setCategory } = filterSlice.actions
+export const { setActivityLevel, setMoney, setCategory, setBinary } = filterSlice.actions
 
 export default filterSlice.reducer

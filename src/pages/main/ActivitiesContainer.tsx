@@ -102,7 +102,6 @@ const styles = createStyles({
         margin: "1vw auto",
         width: (props: Styles) => props['size'] + "vw",
         height: (props: Styles) => props['size'] + "vw",
-        verticalAlign: "bottom",
         borderRadius: "50%",
         fontSize: "1rem",
         color: "#FFF",
@@ -126,10 +125,11 @@ const styles = createStyles({
         backgroundColor: "white",
         color: "black",
         borderRadius: "5vw",
+        textAlign: 'center'
     }
 });
 
-const ActivityCircle = withStyles(styles)(({classes, title, id, size, ...other}: ButtonStyles) => (
+export const ActivityCircle = withStyles(styles)(({classes, title, id, size, ...other}: ButtonStyles) => (
     <div className={classes.root} onClick={() => window.location.href = `/activity/${id}`}>
         <Typography className={classes.title}>{title}</Typography>
     </div>
