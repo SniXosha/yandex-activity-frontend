@@ -5,7 +5,7 @@ export const filterSlice = createSlice({
     name: 'filters',
     initialState: {
         activityLevel: 0,
-        money: 10000,
+        money: 5000,
         category: ALL,
         binary: {
             solo: false,

@@ -1,5 +1,5 @@
 import React, {ReactElement} from "react";
-import {Container, makeStyles} from "@material-ui/core";
+import {Container, makeStyles, Typography} from "@material-ui/core";
 import {flex} from "styles/common";
 import {ActivityCircle} from "pages/main/activities/ActivitiesCircle";
 
@@ -8,10 +8,9 @@ export default function ActivitiesContainer({activities}: any): ReactElement {
     const activityColumns = splittedActivitiesToColumns(classes.activityColumn, splitActivities(activities))
 
     return <Container className={classes.content} maxWidth={false}>
-        {activityColumns}
+        {activityColumns.length > 0 ? activityColumns : <Typography variant={"h2"}>Ничего не найдено :(</Typography>}
     </Container>
 }
-
 
 function splitActivities(activities: any[]) {
     let n = Math.min(activities.length, 4);

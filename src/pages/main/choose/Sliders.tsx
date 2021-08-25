@@ -33,7 +33,7 @@ export function MoneySlider(): ReactElement {
     return <div className={classes.slider}>
         <Typography>Бюджет</Typography>
         <StyledSlider value={money} onChange={(e, newValue) => dispatch(setMoney(newValue))} min={0}
-                      max={10000} step={100} aria-labelledby="continuous-slider"/>
+                      max={5000} step={100} aria-labelledby="continuous-slider"/>
         {money}
     </div>
 }
