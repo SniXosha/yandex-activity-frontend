@@ -203,15 +203,3 @@ export const stretching = {
     category: SPORT,
     binary: ['solo', 'company', 'indoor'],
 }
-
-export const allActivities = [
-    wakesurf, horses, stretching, rockClimbing, planetarium, tea, masterClasses, laserTag, karting, sauna, stretching, boardGames
-]
-
-export const activityByName = (name: string) => {
-    return allActivities.filter(activity => activity.id === name)[0]
-}
-
-export const randomActivity = () => {
-    return allActivities[Math.floor(Math.random() * allActivities.length)];
-}

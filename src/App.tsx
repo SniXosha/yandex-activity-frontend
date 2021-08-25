@@ -33,7 +33,7 @@ function appTheme() {
     return createTheme({
         palette: {
             primary: {
-                main: "#FFFFFF",
+                main: "#fffef2",
             },
             secondary: {
                 main: "#fcee7c",

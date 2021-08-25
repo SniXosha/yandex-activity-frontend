@@ -1,12 +1,11 @@
 import {createStyles, Typography, withStyles} from "@material-ui/core";
 import React from "react";
+import {flex} from "styles/common";
 
 const styles = createStyles({
-    root: {
+    root: flex('row', {
         fontSize: "15rem",
-        display: "flex",
-        flexDirection: "row",
-    },
+    }),
     left: {
         width: "70%",
         fontSize: "1.5vw",

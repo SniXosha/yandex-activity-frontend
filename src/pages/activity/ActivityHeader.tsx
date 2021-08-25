@@ -9,7 +9,6 @@ interface HeaderStyles {
     [key: string]: any;
 }
 
-
 const styles = createStyles({
     root: {
         margin: "1vw auto",
