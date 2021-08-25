@@ -3,9 +3,8 @@ import {
     Button,
     ButtonGroup, Checkbox,
     Container, FormControlLabel,
-    IconButton, InputAdornment,
     makeStyles,
-    Slider, TextField, Toolbar,
+    Slider,
     Typography,
     withStyles
 } from "@material-ui/core";
@@ -157,11 +156,13 @@ function RandomButton(): ReactElement {
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
         >
-            <Container className={classes.randomModal}>
-                <ActivityCircle image={activity.image.url} imageSize={activity.image.size} size={19}
-                                title={activity.name} id={activity.id}/>
+            <div className={classes.randomModal}>
+                <div className={classes.circleBorder}>
+                    <ActivityCircle image={activity.image.url} imageSize={activity.image.size} size={19}
+                                    title={activity.name} id={activity.id}/>
+                </div>
                 <Button onClick={() => setActivity(randomActivity())} className={classes.nextButton}>Ещё</Button>
-            </Container>
+            </div>
         </Modal>
     </>
 }
@@ -280,7 +281,9 @@ const useStyles = makeStyles(theme => ({
     randomModal: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: '17vw',
+        margin: 'auto'
     },
     nextButton: {
         backgroundColor: '#fcee7c',
@@ -292,6 +295,8 @@ const useStyles = makeStyles(theme => ({
     binaryFilters: {
         display: 'flex',
         flexDirection: 'column',
+    },
+    circleBorder: {
     }
 }));
 

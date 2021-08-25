@@ -14,13 +14,13 @@ const styles = createStyles({
     root: {
         margin: "1vw auto",
         width: "100%",
-        height: "40%",
+        height: "20vw",
         verticalAlign: "bottom",
         fontSize: "1rem",
         color: "#FFF",
         backgroundImage: (props: HeaderStyles) => `url(/images/${props['image']}.png)`,
-        backgroundSize: `100% 100%`,
-        backgroundPosition: 'center',
+        backgroundSize: (props: HeaderStyles) => `${props['size']}%`,
+        backgroundPosition: (props: HeaderStyles) => props['position'],
         display: "flex",
         flexDirection: "column",
         alignSelf: "end",
@@ -63,7 +63,7 @@ const styles = createStyles({
     }
 });
 
-export const ActivityHeader = withStyles(styles)(({classes, title}: HeaderStyles) => (
+export const ActivityHeader = withStyles(styles)(({classes, title, position}: HeaderStyles) => (
     <div className={classes.root}>
         <div className={classes.lowerBar}>
             <Typography className={classes.title}>{title}</Typography>

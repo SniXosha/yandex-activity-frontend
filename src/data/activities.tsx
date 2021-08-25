@@ -8,8 +8,12 @@ export const wakesurf = {
     id: 'wakesurf',
     name: 'Вейксёрф',
     image: {
-        url: 'surf',
-        size: 250
+        url: 'surf2',
+        size: 250,
+        poster: {
+            size: 100,
+            position: 'bottom -1vw'
+        }
     },
     activityLevel: 3,
     money: 3000,
@@ -23,7 +27,11 @@ export const horses = {
     name: 'Конный спорт',
     image: {
         url: 'horse',
-        size: 150
+        size: 160,
+        poster: {
+            size: 100,
+            position: 'bottom -1vw'
+        }
     },
     activityLevel: 2,
     money: 1500,
@@ -37,7 +45,11 @@ export const boardGames = {
     name: 'Настолки',
     image: {
         url: 'games',
-        size: 200
+        size: 200,
+        poster: {
+            size: 100,
+            position: 'bottom -1vw'
+        }
     },
     activityLevel: 1,
     money: 700,
@@ -51,11 +63,15 @@ export const masterClasses = {
     name: 'Мастер-классы',
     image: {
         url: 'cook',
-        size: 200
+        size: 200,
+        poster: {
+            size: 100,
+            position: 'center'
+        }
     },
     activityLevel: 1,
     money: 2000,
-    description: "Мастер-класс — урок, даваемый мастером — экспертом в данном виде искусства, науки или ремесла; наиболее типично — в музыке, поэзии, живописи, актерском мастерстве, балете, танцах, шахматах; отличие от обычного класса заключается в методике: мастер-класс дает возможность учиться, наблюдая, как мастер обучает других; обычно проводится признанным мастером, имеющим значительные достижения, собственные труды, последователей, школу и т.п.; сегодня — один из основных способов быстрого освоения новых технологий и повышения профессионального мастерства; в последнее время стало популярным проведение мастер-классов не только «звездами» искусства и спорта, но и мастерами бизнеса и многих других «не звездных» профессий: педагогика, медицина, кулинария, косметика, мода и т.д.",
+    description: "Мастер-класс — урок, даваемый мастером — экспертом в данном виде искусства, науки или ремесла, наиболее типично — в музыке, поэзии, живописи, актерском мастерстве, балете, танцах, шахматах. Отличие от обычного класса заключается в методике: мастер-класс дает возможность учиться, наблюдая, как мастер обучает других",
     category: REST,
     binary: ['solo', 'company', 'noEquipment', 'indoor'],
 }
@@ -65,7 +81,11 @@ export const planetarium = {
     name: 'Планетарий',
     image: {
         url: 'planets',
-        size: 200
+        size: 200,
+        poster: {
+            size: 100,
+            position: 'bottom'
+        }
     },
     activityLevel: 1,
     money: 500,
@@ -79,7 +99,11 @@ export const tea = {
     name: 'Чайная церемония',
     image: {
         url: 'tea',
-        size: 150
+        size: 150,
+        poster: {
+            size: 100,
+            position: 'center'
+        }
     },
     activityLevel: 1,
     money: 500,
@@ -94,7 +118,11 @@ export const rockClimbing = {
     name: 'Скалолазание',
     image: {
         url: 'rock',
-        size: 150
+        size: 200,
+        poster: {
+            size: 100,
+            position: 'center'
+        }
     },
     activityLevel: 3,
     money: 700,
@@ -108,7 +136,11 @@ export const laserTag = {
     name: 'Лазертаг',
     image: {
         url: 'lasers',
-        size: 200
+        size: 200,
+        poster: {
+            size: 100,
+            position: 'center'
+        }
     },
     activityLevel: 2,
     money: 1000,
@@ -122,7 +154,11 @@ export const karting = {
     name: 'Картинг',
     image: {
         url: 'karting',
-        size: 170
+        size: 170,
+        poster: {
+            size: 100,
+            position: 'center -5vw'
+        }
     },
     activityLevel: 2,
     money: 2000,
@@ -136,7 +172,11 @@ export const sauna = {
     name: 'Сауна',
     image: {
         url: 'sauna',
-        size: 150
+        size: 150,
+        poster: {
+            size: 100,
+            position: 'center -5vw'
+        }
     },
     activityLevel: 1,
     money: 2000,
@@ -151,7 +191,11 @@ export const stretching = {
     name: 'Стретчинг',
     image: {
         url: 'stretching',
-        size: 150
+        size: 150,
+        poster: {
+            size: 100,
+            position: 'center bottom'
+        }
     },
     activityLevel: 2,
     money: 1000,
@@ -161,7 +205,7 @@ export const stretching = {
 }
 
 export const allActivities = [
-    wakesurf, horses, boardGames, masterClasses, planetarium, tea, rockClimbing, laserTag, karting, sauna, stretching
+    wakesurf, horses, stretching, rockClimbing, planetarium, tea, masterClasses, laserTag, karting, sauna, stretching, boardGames
 ]
 
 export const activityByName = (name: string) => {

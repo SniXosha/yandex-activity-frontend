@@ -12,7 +12,7 @@ export default function ActivityPage(): ReactElement {
     let activity = activityByName(name)
 
     return <Container className={classes.content} maxWidth={false}>
-        <ActivityHeader image={activity.image.url} title={activity.name}/>
+        <ActivityHeader image={activity.image.url} size={activity.image.poster.size} position={activity.image.poster.position} title={activity.name}/>
         <ActivityBody activity={activity}/>
     </Container>
 }
